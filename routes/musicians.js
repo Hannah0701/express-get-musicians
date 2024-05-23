@@ -1,5 +1,5 @@
 const express = require("express");
-const Musician = require("../models");
+const { Musician } = require("../models");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -11,6 +11,9 @@ router.get("/:id", async (req, res) => {
     const musician = await Musician.findByPk(req.params.id);
     res.json(musician);
 });
+
+router.use(express.json());
+router.use(express.urlencoded({extended: true}));
 
 router.post("/", async (req, res) => {
     const musician = await Musician.create(req.body);
